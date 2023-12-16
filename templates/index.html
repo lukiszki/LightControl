@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Control Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Light Control Scheduler</h1>
+    <div id="actionList"></div>
+    <button onclick="addAction()">Add New Action</button>
+    <button id="submitActions">Submit Actions</button>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        window.onload = function() {
+            const existingActionsNested = JSON.parse('{{ actions | tojson | safe }}');
+            const existingActions = existingActionsNested.flat();
+            existingActions.forEach(action => {
+                if (action && action.time && action.brightness) {
+                    addAction(action.time, action.brightness);
+                }
+            });
+        };
+    </script>
+</body>
+</html>
